@@ -6,9 +6,3 @@ ExtensionManagementUtility::addStaticFile(
     'Configuration/TypoScript/',
     'Addresses'
 );
-
-ExtensionManagementUtility::addStaticFile(
-    'addresses',
-    'Configuration/TypoScript/NewsAuthor',
-    'Addresses - News author'
-);
