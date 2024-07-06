@@ -1,7 +1,7 @@
 <?php
 $EM_CONF[$_EXTKEY] = [
 	'title' => 'Addresses',
-	'description' => 'Address lists',
+	'description' => 'Address lists or selected records. Demo at: microtemplate.t3brightside.com',
 	'category' => 'fe',
 	'version' => '1.0.2',
 	'state' => 'stable',
