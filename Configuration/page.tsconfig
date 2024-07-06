@@ -5,8 +5,6 @@ TCEFORM.tt_content.tx_addresses_template.addItems {
   table = Table
 }
 
-TCAdefaults.tt_content.tx_addresses_template = cards
-
 TCEFORM.tt_content.tx_addresses_titlewrap.addItems {
   0 = Default
   h2 = H2
