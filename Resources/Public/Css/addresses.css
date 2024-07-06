@@ -51,6 +51,10 @@ p.addresses-item-title {
     height: auto;
 }
 
+.addresses-item svg path {
+    fill: black;
+}
+
 .addresses-item-link svg {
     margin-right: 1em;
 }
