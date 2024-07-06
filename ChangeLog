@@ -2,3 +2,7 @@
     [TASK] initial release
 * 1.0.1
     [TASK] remove news author TS conf
+* 1.0.2
+    [TASK] add icon colouring
+    [TASK] add Default layout and Main section
+    [TASK] remove default template set to cards
