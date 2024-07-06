@@ -1,0 +1,31 @@
+# customsubcategory=addresses=Addresses
+# cat=Addresses/addresses; type=string; label= Styles file
+addresses.cssFile = EXT:addresses/Resources/Public/Css/addresses.css
+# cat=Addresses/addresses; type=boolean; label= Css priority, 0 means CSS is in page footer
+addresses.cssPriority = 1
+# cat=Addresses/addresses; type=boolean; label= Force loading CSS with TypoScript
+addresses.cssForceTs = 0
+# cat=Addresses/addresses; type=string; label= Templates root path
+addresses.templateRootPaths = EXT:addresses/Resources/Private/Templates/
+# cat=Addresses/addresses; type=string; label= Partials root path
+addresses.partialRootPaths = EXT:addresses/Resources/Private/Partials/
+# cat=Addresses/addresses; type=string; label= Default image crop ratio
+addresses.imageCropRatio = default
+# cat=Addresses/addresses; type=string; label= Card image width (px)
+addresses.cardImageWidth = 1056
+# cat=Addresses/addresses; type=string; label= List image width (px)
+addresses.listImageWidth = 225
+# cat=Addresses/addresses; type=string; label= Table image width (px)
+addresses.tableImageWidth = 50
+# cat=Addresses/addresses; type=string; label= Zoomed image max width (px)
+addresses.zoomedImageMaxWidth = 1200
+# cat=Addresses/addresses; type=string; label= Address's name element in card layout (h2, h3 etc)
+addresses.cardNameWrap = h3
+# cat=Addresses/addresses; type=string; label= Address's name element in list layout (h2, h3 etc)
+addresses.listNameWrap = h3
+# cat=Addresses/addresses; type=string; label= Pagination items per page
+addresses.paginationItems = 8
+# cat=Addresses/addresses; type=string; label= Pagination links
+addresses.paginationLinks = 10
+# cat=Addresses/addresses; type=sting; label= Force image file format (make sure it's enabled in [GFX][imagefile_ext])
+addresses.forceImageFileFormat =

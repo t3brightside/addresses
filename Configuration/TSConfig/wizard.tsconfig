@@ -1,0 +1,21 @@
+mod.wizards.newContentElement.wizardItems.common {
+  elements {
+    addresses_frompages {
+      iconIdentifier = mimetypes-x-content-addresses
+      title = Addresses: from pages
+      description = Shows addresss from selected pages or sys folders.
+      tt_content_defValues {
+        CType = addresses_frompages
+      }
+    }
+    addresses_selected {
+      iconIdentifier = mimetypes-x-content-addresses
+      title = Addresses: selected
+      description = Shows selected address records.
+      tt_content_defValues {
+        CType = addresses_selected
+      }
+    }
+  }
+  show := addToList(addresses_frompages,addresses_selected)
+}

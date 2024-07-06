@@ -1,0 +1,6 @@
+# cat=basic/enable; type=options[Disabled=0,Enabled=1]; label=Enable address selection in page properties
+addressesInPages = 0
+# cat=basic/enable; type=options[Disabled=0,Enabled=1]; label=Enable pagination
+addressesEnablePagination = 1
+# cat=basic/enable; type=options[Disabled=0,Enabled=1]; label=Show image thumbnails in BE preview
+addressesBeThumbnails = 0

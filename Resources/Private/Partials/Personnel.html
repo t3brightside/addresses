@@ -1,0 +1,31 @@
+<f:comment>
+    <!-- Available fields for connected personnel -->
+    {person.data.title}
+	{person.data.firstname}
+    {person.data.lastname}
+	{person.data.profession}
+	{person.data.responsibility}
+	{person.data.info}
+	{person.data.phone}
+    {person.data.email}
+	{person.data.images}
+	{person.data.linkedin}
+	{person.data.xing}
+	{person.data.twitter}
+	{person.data.github}
+	{person.data.instagram}
+	{person.data.youtube}
+	{person.data.facebook}
+	{person.data.website}
+</f:comment>
+<f:for each="{address.personnel}" as="person">
+    <div class="addresses-item-personnel-person">
+        <f:if condition="{person.images.0}">
+            <f:image image="{person.images.0}" fileExtension="{settings.forceImageFileFormat}"  width="100" cropVariant="square" />
+        </f:if>
+        <strong>{person.data.firstname} {person.data.lastname}</strong><br />
+        {person.data.profession}<br />
+        <f:link.email class="addresses-item-personnel-email" email="{person.data.email}" title="E-mail">{person.data.email}</f:link.email>
+        <br /><br />
+    </div>
+</f:for>

@@ -1,0 +1,11 @@
+{namespace base64 = Brightside\Addresses\ViewHelpers}
+BEGIN:VCARD
+VERSION:2.1
+N;CHARSET=utf-8:<f:format.htmlentitiesDecode>{address.0.data.name}</f:format.htmlentitiesDecode>;<f:format.htmlentitiesDecode>{address.0.data.firstname}</f:format.htmlentitiesDecode>;;;
+ORG;CHARSET=utf-8:<f:if condition="{address.0.data.name}">{address.0.data.name}</f:if>;
+<f:if condition="{address.0.data.email}">EMAIL:{address.0.data.email}</f:if>
+<f:if condition="{address.0.data.web}">URL;type=pref:https\://{address.0.data.web}</f:if>
+<f:if condition="{address.0.data.phone}">TEL;WORK;VOICE;pref:<f:format.htmlentitiesDecode>{address.0.data.phone}</f:format.htmlentitiesDecode></f:if>
+<f:if condition="{address.0.files.0}">PHOTO;<base64:image image="{address.0.files.0}" absolute="1" width="200c" height="200c-100" /></f:if>
+URL;pref:<f:cObject typoscriptObjectPath="vCardURL" />
+END:VCARD

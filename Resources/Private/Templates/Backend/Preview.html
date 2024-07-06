@@ -1,0 +1,33 @@
+
+<html xmlns:be="http://typo3.org/ns/TYPO3/CMS/Backend/ViewHelpers" data-namespace-typo3-fluid="true">
+    <f:if condition="!{addressesitem.tx_addresses_images}">
+        <div class="preview-thumbnails" style="--preview-thumbnails-size: 64px">
+            <f:for each="{addressesRecords}" as="address" iteration="iterator">
+                <div class="preview-thumbnails-element">
+                    <f:if condition="!{address.resolvedImages.0.properties.hidden} && {address.resolvedImages.0}">
+                        <f:then>
+                            <f:image image="{address.resolvedImages.0}" width="64" cropVariant="{addressesitem.tx_addresses_cropratio}" alt="{address.firstname} {address.lastname}" />
+                        </f:then>
+                        <f:else>
+                            <div style="width: 64px; height: 100%; background: #ccc;"></div>
+                        </f:else>
+                    </f:if>
+                </div>
+            </f:for>
+        </div>
+    </f:if>
+    <ul style="margin: 0; margin-top: 0.5em; padding: 0.2em 1.4em;">
+        <f:if condition="{pageTitles}"><li>Records from: <b><f:for each="{pageTitles}" as="title" iteration="iterator">{title}{f:if(condition: iterator.isLast, then: '', else: ', ')}</f:for></b></li></f:if>
+        <f:if condition="{catTitles}"><li>Category filter (ANY): <f:for each="{catTitles}" as="category" iteration="iterator">{category.title}{f:if(condition: iterator.isLast, then: '', else: ', ')}</f:for></li></f:if>
+        <f:if condition="{addressesitem.tx_addresses_orderby}"><li>Order by: {addressesitem.tx_addresses_orderby}</li></f:if>
+        <f:if condition="{addressesitem.tx_addresses_startfrom}"><li>Start from record: {addressesitem.tx_addresses_startfrom}</li></f:if>
+        <f:if condition="{addressesitem.tx_addresses_limit}"><li>Show that many: {addressesitem.tx_addresses_limit}</li></f:if>
+        <f:if condition="{addressesitem.tx_addresses_template}"><li>Layout: {addressesitem.tx_addresses_template}</li></f:if>
+        <f:if condition="{addressesitem.tx_addresses_titlewrap}"><li>Name wrap: {addressesitem.tx_addresses_titlewrap}</li></f:if>
+        <f:if condition="{addressesitem.tx_addresses_images}"><li>Images: disabled</li></f:if>
+        <f:if condition="!{addressesitem.tx_addresses_images} && {addressesitem.tx_addresses_cropratio}"><li>Image crop: {addressesitem.tx_addresses_cropratio}</li></f:if>
+        <f:if condition="!{addressesitem.tx_addresses_information}"><li>Information: enabled</li></f:if>
+        <f:if condition="!{addressesitem.tx_addresses_vcard}"><li>vCard: enabled</li></f:if>
+        <f:if condition="{addressesitem.tx_paginatedprocessors_paginationenabled}"><li>Pagination: enabled</li></f:if>
+    </ul>
+</html>

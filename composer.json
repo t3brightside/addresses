@@ -1,0 +1,35 @@
+{
+  "name": "t3brightside/addresses",
+  "description": "TYPO3 CMS extension for addresses lists.",
+  "type": "typo3-cms-extension",
+  "keywords": ["TYPO3", "address", "contact", "location"],
+  "license": "GPL-2.0-or-later",
+  "homepage": "https://t3brightside.com",
+  "authors": [
+      {
+          "name": "Tanel Põld",
+          "role": "Developer",
+          "homepage": "https://t3brightside.com"
+      }
+  ],
+  "require": {
+	"typo3/cms-core": "^12.4 || ^13.0",
+	"typo3/cms-fluid-styled-content": "^12.4 || ^13.0",
+	"t3brightside/paginatedprocessors": "^1.6",
+	"t3brightside/embedassets": "^1.3"
+  },
+  "suggest": {
+	"t3brightside/personnel": "Persons records",
+	"t3brightside/addresspersonnel": "Connect personnel and address records bidirectionally"
+  },
+  "autoload": {
+    "psr-4": {
+      "Brightside\\Addresses\\": "Classes"
+    }
+  },
+  "extra": {
+    "typo3/cms": {
+      "extension-key": "addresses"
+    }
+  }
+}
