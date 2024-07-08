@@ -31,7 +31,7 @@ return [
             'fe_group' => 'fe_group',
         ],
         'iconfile' => 'EXT:addresses/Resources/Public/Icons/mimetypes-x-content-addresses.svg',
-        'searchFields' => 'uid,firstname,lastname,email,phone,profession,info',
+        'searchFields' => 'uid,name,address,city,zip,region,country,email,phone,fax,website,info',
         'security' => [
             'ignorePageTypeRestriction' => true,
         ],
