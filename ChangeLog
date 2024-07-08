@@ -6,3 +6,7 @@
     [TASK] add icon colouring
     [TASK] add Default layout and Main section
     [TASK] remove default template set to cards
+* 1.0.3
+    [BUGFIX] Addresses TCA seach config contains not existing fields
+    [TASK] Improved description
+    [TASK] set item image width dynamic
