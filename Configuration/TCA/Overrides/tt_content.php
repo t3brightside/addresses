@@ -127,21 +127,6 @@ $tempColumns = array(
             'items'    => array(), /* items set in page TsConfig */
         ],
     ],
-    'tx_addresses_vcard' => [
-        'exclude' => 1,
-        'label' => 'vCard Download',
-        'config' => [
-            'type' => 'check',
-            'renderType' => 'checkboxToggle',
-            'items' => [
-                [
-                    0 => '',
-                    1 => '',
-                    'invertStateDisplay' => true
-                ]
-            ],
-        ]
-    ],
     'tx_addresses_information' => [
         'exclude' => 1,
         'label' => 'Information',
