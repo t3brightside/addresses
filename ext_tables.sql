@@ -34,13 +34,14 @@ CREATE TABLE tx_addresses_domain_model_address (
 	youtube tinytext,
 	facebook tinytext,
 	website tinytext,
+	pages INT UNSIGNED DEFAULT 0 NOT NULL,
 	KEY parent (pid,sorting),
 	KEY t3ver_oid (t3ver_oid,t3ver_wsid),
 	KEY language (sys_language_uid)
 );
 
 CREATE TABLE pages (
-	tx_addresses tinytext,
+	tx_personnel INT UNSIGNED DEFAULT 0 NOT NULL,
 );
 
 
@@ -49,8 +50,8 @@ CREATE TABLE tx_addresses_mm (
     uid_foreign int(11) DEFAULT '0' NOT NULL,
     sorting int(11) DEFAULT '0' NOT NULL,
     sorting_foreign int(11) DEFAULT '0' NOT NULL,
-    ident varchar(30) DEFAULT '' NOT NULL,
-		tablename varchar(255) DEFAULT '' NOT NULL,
+		tablenames varchar(255) DEFAULT '' NOT NULL,
+		fieldname varchar(255) DEFAULT '' NOT NULL,
     PRIMARY KEY (uid_local, uid_foreign),
     KEY uid_local (uid_local),
     KEY uid_foreign (uid_foreign)

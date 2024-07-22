@@ -16,6 +16,11 @@ if ($extConf['addressesInPages']) {
                 'renderType' => 'selectMultipleSideBySide',
                 'foreign_table' => 'tx_addresses_domain_model_address',
                 'MM' => 'tx_addresses_mm',
+                'MM_opposite_field' => 'pages',
+                'MM_match_fields' => [
+                    'tablenames' => 'pages',
+                    'fieldname' => 'tx_addresses',
+                ],
                 'size' => 5,
                 'autoSizeMax' => 5,
                 'maxitems' => 9999,
@@ -40,9 +45,9 @@ if ($extConf['addressesInPages']) {
     ExtensionManagementUtility::addTCAcolumns('pages', $tempColumns, 1);
     ExtensionManagementUtility::addToAllTCAtypes(
         'pages',
-        '--palette--;Addresses;addressescontact',
+        '--palette--;Addresses;addresses',
         '1',
         'after:subtitle'
     );
-    $GLOBALS['TCA']['pages']['palettes']['addressescontact']['showitem'] = 'tx_addresses,';
+    $GLOBALS['TCA']['pages']['palettes']['addresses']['showitem'] = 'tx_addresses,';
 }
