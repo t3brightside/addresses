@@ -41,7 +41,7 @@ CREATE TABLE tx_addresses_domain_model_address (
 );
 
 CREATE TABLE pages (
-	tx_personnel INT UNSIGNED DEFAULT 0 NOT NULL,
+	tx_addresses INT UNSIGNED DEFAULT 0 NOT NULL,
 );
 
 
