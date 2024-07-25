@@ -10,3 +10,6 @@
     [BUGFIX] Addresses TCA seach config contains not existing fields
     [TASK] Improved description
     [TASK] set item image width dynamic
+* 1.0.4
+    [FEATURE] Improve bidirectional editing between pages and addresses
+    [TASK] clean up, remove vCard related configuration
