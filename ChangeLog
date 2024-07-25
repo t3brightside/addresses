@@ -13,3 +13,5 @@
 * 1.0.4
     [FEATURE] Improve bidirectional editing between pages and addresses
     [TASK] clean up, remove vCard related configuration
+* 1.0.5
+    [BUGFIX] wront table name instead of tx_addresses
