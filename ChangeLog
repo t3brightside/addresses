@@ -15,3 +15,6 @@
     [TASK] clean up, remove vCard related configuration
 * 1.0.5
     [BUGFIX] wront table name instead of tx_addresses
+* 1.1.0
+    [BUGFIX] rename name sorting field
+    [FEATURE] add timezone field to address records
