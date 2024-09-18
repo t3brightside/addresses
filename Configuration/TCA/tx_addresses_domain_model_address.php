@@ -70,7 +70,8 @@ return [
         'geo' => [
             'showitem' => '
                 latitude,
-                longitude,
+                longitude,--linebreak--,
+                timezone,
             '
         ],
         'contact' => [
@@ -371,6 +372,19 @@ return [
                     'allowLanguageSynchronization' => true,
                 ],
             ]
+        ],
+        'timezone' => [
+            'label' => 'Timezone',
+            'config' => [
+                'type' => 'select',
+                'renderType' => 'selectSingle',
+                'itemsProcFunc' => 'Brightside\\Addresses\\Userfunc\\TimezoneOptions->getTimezones', // Reference the custom method
+                'size' => 1,
+                'maxitems' => 1,
+                'items' => [
+                    ['', ''], // Add this to provide an empty first option
+                ],
+            ],
         ],
         'phone' => [
             'exclude' => 1,

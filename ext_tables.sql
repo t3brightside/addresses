@@ -24,6 +24,7 @@ CREATE TABLE tx_addresses_domain_model_address (
 	country tinytext,
 	latitude tinytext,
 	longitude tinytext,
+	timezone tinytext,
 	images int(11) unsigned DEFAULT '0',
 	selected_categories text,
 	linkedin tinytext,
