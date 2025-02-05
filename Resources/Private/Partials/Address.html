@@ -2,7 +2,7 @@
     <f:if condition="{data.tx_addresses_images} == 0">
         <f:if condition="{address.files.0}">
             <figure>
-                <f:image  class="addresses-item-img" image="{address.files.0}" cropVariant="{f:if(condition: '{data.tx_addresses_cropratio}', then: '{data.tx_addresses_cropratio}', else: '{settings.imageCropRatio}')}" fileExtension="{settings.forceImageFileFormat}" loading="{f:if(condition: '!{data.tx_imagelazyload}', then: 'lazy')}" width="{settings.cardImageWidth}" alt="{address.data.firstname} {address.data.lastname}" additionalAttributes="{srcset: '{f:uri.image(image:\'{address.files.0}\', width:\'{cardImageWidth_x2}\', cropVariant:\'{data.tx_addresses_cropratio}\', fileExtension:\'{settings.forceImageFileFormat}\')} 2x'}" />
+                <f:image  class="addresses-item-img" image="{address.files.0}" cropVariant="{f:if(condition: '{data.tx_addresses_cropratio}', then: '{data.tx_addresses_cropratio}', else: '{settings.imageCropRatio}')}" fileExtension="{settings.forceImageFileFormat}" loading="{f:if(condition: '!{data.tx_imagelazyload}', then: 'lazy')}" width="{settings.cardImageWidth}" alt="{f:if(condition: '!{address.files.0.alternative}', then: '{address.data.name}', else: '{address.files.0.alternative}')}" additionalAttributes="{srcset: '{f:uri.image(image:\'{address.files.0}\', width:\'{cardImageWidth_x2}\', cropVariant:\'{data.tx_addresses_cropratio}\', fileExtension:\'{settings.forceImageFileFormat}\')} 2x'}" />
             </figure>
         </f:if>
     </f:if>

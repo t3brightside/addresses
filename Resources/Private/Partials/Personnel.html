@@ -21,7 +21,7 @@
 <f:for each="{address.personnel}" as="person">
     <div class="addresses-item-personnel-person">
         <f:if condition="{person.images.0}">
-            <f:image image="{person.images.0}" fileExtension="{settings.forceImageFileFormat}"  width="100" cropVariant="square" />
+            <f:image image="{person.images.0}" fileExtension="{settings.forceImageFileFormat}" alt="{f:if(condition: '{person.images.0.alternative}', then: '{person.images.0.alternative}', else: '{person.data.firstname} {person.data.lastname}')}" width="100" cropVariant="square" />
         </f:if>
         <strong>{person.data.firstname} {person.data.lastname}</strong><br />
         {person.data.profession}<br />
