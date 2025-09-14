@@ -18,3 +18,5 @@
 * 1.1.0
     [BUGFIX] rename name sorting field
     [FEATURE] add timezone field to address records
+* 1.1.1
+    [BUGFIX] remove 'type' => '0'
