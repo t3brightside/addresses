@@ -6,6 +6,3 @@ services:
 
   Brightside\Addresses\DataProcessing\AddressesDatabaseQueryProcessor:
     public: true
-
-  Brightside\Addresses\ViewHelpers\ImageViewHelper:
-    public: true
