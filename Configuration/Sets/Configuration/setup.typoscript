@@ -1,0 +1,98 @@
+# by t3brightside.com
+["{$addresses.cssForceTs}" == "1"]
+  page.includeCSS.addresses = {$addresses.cssFile}
+[END]
+
+# page.includeCSS.addresses = {$addresses.cssFile}
+
+tt_content.addresses_default =< lib.contentElement
+tt_content.addresses_default {
+    templateRootPaths.10 = EXT:addresses/Resources/Private/Templates/
+    templateRootPaths.20 = {$addresses.templateRootPaths}
+    partialRootPaths.10 = EXT:addresses/Resources/Private/Partials/
+    partialRootPaths.20 = {$addresses.partialRootPaths}
+    templateName = Addresses
+    settings {
+        cssFile = {$addresses.cssFile}
+        cssPriority = {$addresses.cssPriority}
+        cssForceTs = {$addresses.cssForceTs}
+        imageCropRatio = {$addresses.imageCropRatio}
+        cardImageWidth = {$addresses.cardImageWidth}
+        listImageWidth = {$addresses.listImageWidth}
+        tableImageWidth = {$addresses.tableImageWidth}
+        zoomedImageMaxWidth = {$addresses.zoomedImageMaxWidth}
+        cardNameWrap = {$addresses.cardNameWrap}
+        listNameWrap = {$addresses.listNameWrap}
+        forceImageFileFormat = {$addresses.forceImageFileFormat}
+    }
+    stdWrap {
+        editIcons = tt_content: header [header_layout], pages
+        editIcons.iconTitle.data = LLL:EXT:fluid_styled_content/Resources/Private/Language/FrontendEditing.xlf:editIcon.menu
+    }
+}
+
+tt_content.addresses_frompages < tt_content.addresses_default
+tt_content.addresses_frompages {
+#   dataProcessing.10 = Brightside\Addresses\DataProcessing\AddressesDatabaseQueryProcessor
+    dataProcessing.10 = Brightside\Paginatedprocessors\DataProcessing\PaginatedDatabaseQueryProcessor
+    dataProcessing.10 {
+        pagination {
+          isActive.field = tx_paginatedprocessors_paginationenabled
+          uniqueId.field = uid
+          uniqueId.override.field = tx_paginatedprocessors_urlsegment
+          itemsPerPage = 10
+          itemsPerPage.override.field = tx_paginatedprocessors_itemsperpage
+          pageLinksShown = 5
+          pageLinksShown.override.field = tx_paginatedprocessors_pagelinksshown
+          anchorActive.field = tx_paginatedprocessors_anchor
+          anchorId.field = uid
+          anchorId.override.field = tx_paginatedprocessors_anchorid
+        }
+        table = tx_addresses_domain_model_address
+        selectFields = tx_addresses_domain_model_address.*
+        pidInList.field = pages
+        max.field = tx_addresses_limit
+        begin.field = tx_addresses_startfrom
+        groupBy = uid
+        orderBy.field = tx_addresses_orderby
+        join.data = field:selected_categories
+        join.wrap = sys_category_record_mm ON uid = sys_category_record_mm.uid_foreign AND sys_category_record_mm.uid_local IN(|)
+        join.wrap.if.isTrue.field = selected_categories
+        where.stdWrap.orderedStdWrap {
+            10.wrap = AND tablenames='tx_addresses_domain_model_address' AND fieldname='categories'
+            10.wrap.if.isTrue.field = selected_categories
+        }
+        as = addresses
+        dataProcessing {
+            10 = TYPO3\CMS\Frontend\DataProcessing\FilesProcessor
+            10.references.fieldName = images
+        }
+    }
+}
+
+tt_content.addresses_selected < tt_content.addresses_default
+tt_content.addresses_selected {
+    dataProcessing.10 = Brightside\Addresses\DataProcessing\AddressesDatabaseQueryProcessor
+    dataProcessing.10 {
+        pagination {
+          isActive.field = tx_paginatedprocessors_paginationenabled
+          uniqueId.field = uid
+          uniqueId.override.field = tx_paginatedprocessors_urlsegment
+          itemsPerPage = 10
+          itemsPerPage.override.field = tx_paginatedprocessors_itemsperpage
+          pageLinksShown = 5
+          pageLinksShown.override.field = tx_paginatedprocessors_pagelinksshown
+          anchorActive.field = tx_paginatedprocessors_anchor
+          anchorId.field = uid
+          anchorId.override.field = tx_paginatedprocessors_anchorid
+        }
+        table = tx_addresses_domain_model_address
+        pidInList = 0
+        uidInList.field = tx_addresses
+        as = addresses
+        dataProcessing {
+            10 = TYPO3\CMS\Frontend\DataProcessing\FilesProcessor
+            10.references.fieldName = images
+        }
+    }
+}
