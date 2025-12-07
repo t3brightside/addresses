@@ -329,9 +329,9 @@ class AddressesPreviewRenderer extends StandardContentPreviewRenderer implements
         // INFORMATION FIELD CHECK
         if ($isFieldAvailable('tx_addresses_information')) {
             if (!$disableInformation) {
-                $output .= $createDetailLine('Information Block:', 'enabled');
+                $output .= $createDetailLine('Information:', 'enabled');
             } else {
-                $output .= $createDetailLine('Information Block:', 'disabled');
+                $output .= $createDetailLine('Information:', 'disabled');
             }
         }
 
