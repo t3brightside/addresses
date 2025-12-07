@@ -6,7 +6,7 @@ namespace Brightside\Addresses\Preview;
 
 use TYPO3\CMS\Backend\Preview\PreviewRendererInterface;
 use TYPO3\CMS\Backend\Preview\StandardContentPreviewRenderer;
-use TYPO3\CMS\Backend\Utility\BackendUtility; // Required for getPagesTSconfig
+use TYPO3\CMS\Backend\Utility\BackendUtility;
 use TYPO3\CMS\Backend\View\BackendLayout\Grid\GridColumnItem;
 use TYPO3\CMS\Core\Collection\LazyRecordCollection;
 use TYPO3\CMS\Core\Database\ConnectionPool;
@@ -50,28 +50,42 @@ class AddressesPreviewRenderer extends StandardContentPreviewRenderer implements
         }
 
         // --- 3. TSconfig Removal/Disabled Check (User + Page) ---
-
+        
         $pid = $this->getRecordValueSafely($record, 'pid', 0);
+        $CType = $this->getRecordValueSafely($record, 'CType', '');
 
         // Fetch both configurations (using documented API)
         $userTsConfig = $GLOBALS['BE_USER']->getTSConfig();
         $pageTsConfig = $pid > 0 ? BackendUtility::getPagesTSconfig((int)$pid) : [];
         
-        // ACCURATE Array access for the field configuration (note the trailing dot on table and field names)
-        $configsToCheck = [
-            $userTsConfig['TCEFORM.'][self::TT_CONTENT_TABLE . '.'][$fieldName . '.'] ?? [],
-            $pageTsConfig['TCEFORM.'][self::TT_CONTENT_TABLE . '.'][$fieldName . '.'] ?? [],
+        // Define all places where the field config might live:
+        $tsConfigPaths = [
+            // [Table/Field config array, CType specific config array]
+            [
+                $userTsConfig['TCEFORM.'][self::TT_CONTENT_TABLE . '.'][$fieldName . '.'] ?? [],
+                $userTsConfig['TCEFORM.'][self::TT_CONTENT_TABLE . '.'][$fieldName . '.']['types.'][$CType . '.'] ?? [],
+            ],
+            [
+                $pageTsConfig['TCEFORM.'][self::TT_CONTENT_TABLE . '.'][$fieldName . '.'] ?? [],
+                $pageTsConfig['TCEFORM.'][self::TT_CONTENT_TABLE . '.'][$fieldName . '.']['types.'][$CType . '.'] ?? [],
+            ],
         ];
 
-        foreach ($configsToCheck as $config) {
-            // Check for explicit disabled state (TCEFORM.field.disabled = 1)
-            $isDisabled = (bool)($config['disabled'] ?? false);
-            if ($isDisabled) {
+        foreach ($tsConfigPaths as [$globalConfig, $typeConfig]) {
+            // Check 3a: Global Field Rule (TCEFORM.tt_content.field.disabled = 1)
+            $isDisabledGlobal = (bool)($globalConfig['disabled'] ?? false);
+            if ($isDisabledGlobal) {
                 return false;
             }
 
-            // Check for explicit removal (TCEFORM.field.removeItems = fieldname)
-            $removeItems = $config['removeItems'] ?? '';
+            // Check 3b: Conditional Type Rule (TCEFORM.tt_content.field.types.CType.disabled = 1)
+            $isDisabledType = (bool)($typeConfig['disabled'] ?? false);
+            if ($isDisabledType) {
+                return false;
+            }
+
+            // Check 3c: Explicit Removal (TCEFORM.field.removeItems = fieldname)
+            $removeItems = $globalConfig['removeItems'] ?? '';
             if (GeneralUtility::inList($removeItems, $fieldName)) {
                 return false;
             }
@@ -162,7 +176,7 @@ class AddressesPreviewRenderer extends StandardContentPreviewRenderer implements
         $record = $item->getRecord();
         $getValue = fn(string $field, mixed $default = null) => $this->getRecordValueSafely($record, $field, $default);
         
-        // Pass the entire record to the helper so we can extract the PID for Page TSconfig check
+        // Pass the entire record to the helper so we can extract the PID and CType
         $isFieldAvailable = fn(string $field) => $this->isFieldAvailableForRecord($record, $field);
 
         // --- Retrieve all configuration fields ---
@@ -315,9 +329,9 @@ class AddressesPreviewRenderer extends StandardContentPreviewRenderer implements
         // INFORMATION FIELD CHECK
         if ($isFieldAvailable('tx_addresses_information')) {
             if (!$disableInformation) {
-                $output .= $createDetailLine('Information:', 'enabled');
+                $output .= $createDetailLine('Information Block:', 'enabled');
             } else {
-                $output .= $createDetailLine('Information:', 'disabled');
+                $output .= $createDetailLine('Information Block:', 'disabled');
             }
         }
 
