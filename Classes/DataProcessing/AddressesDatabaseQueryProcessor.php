@@ -11,98 +11,81 @@ class AddressesDatabaseQueryProcessor extends DatabaseQueryProcessor
     /**
      * Fetches records from the database as an array
      *
-     * @param \TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer $cObj The data of the content element or page
-     * @param array $contentObjectConfiguration The configuration of Content Object
-     * @param array $processorConfiguration The configuration of this processor
-     * @param array $processedData Key/value store of processed data (e.g. to be passed to a Fluid View)
-     *
-     * @return array the processed data as key/value store
+     * @param ContentObjectRenderer $cObj
+     * @param array $contentObjectConfiguration
+     * @param array $processorConfiguration
+     * @param array $processedData
+     * @return array
      */
     public function process(
         ContentObjectRenderer $cObj,
         array $contentObjectConfiguration,
         array $processorConfiguration,
         array $processedData
-    ) {
+    ): array {
+        // Conditional processing
         if (isset($processorConfiguration['if.']) && !$cObj->checkIf($processorConfiguration['if.'])) {
             return $processedData;
         }
 
-        // the table to query, if none given, exit
+        // Table to query
         $tableName = $cObj->stdWrapValue('table', $processorConfiguration);
         if (empty($tableName)) {
             return $processedData;
         }
-        if (isset($processorConfiguration['table.'])) {
-            unset($processorConfiguration['table.']);
-        }
-        if (isset($processorConfiguration['table'])) {
-            unset($processorConfiguration['table']);
-        }
 
-        // The variable to be used within the result
+        unset($processorConfiguration['table.'], $processorConfiguration['table']);
+
+        // Target variable for Fluid
         $targetVariableName = $cObj->stdWrapValue('as', $processorConfiguration, 'records');
 
-        //MO: new sorting provided by tx_addresses_orderby field
-        if(
-            isset($cObj->data['tx_addresses_orderby'])
-            && $cObj->data['tx_addresses_orderby'] !== ""
-            && $cObj->data['tx_addresses_orderby'] !== "0"
-        ) {
-            $processorConfiguration['orderBy'] = $cObj->data['tx_addresses_orderby'];
-        }
-
-        // Execute a SQL statement to fetch the records
+        // Fetch records
         $records = $cObj->getRecords($tableName, $processorConfiguration);
 
         $processedRecordVariables = [];
-        foreach ($records as $key => $record) {
-            /** @var ContentObjectRenderer $recordContentObjectRenderer */
-            $recordContentObjectRenderer = GeneralUtility::makeInstance(ContentObjectRenderer::class);
-            $recordContentObjectRenderer->start($record, $tableName);
+        foreach ($records as $record) {
+            /** @var ContentObjectRenderer $recordCObj */
+            $recordCObj = GeneralUtility::makeInstance(ContentObjectRenderer::class);
+            $recordCObj->start($record, $tableName);
+
             $processedRecordVariables[$record['uid']] = ['data' => $record];
             $processedRecordVariables[$record['uid']] = $this->contentDataProcessor->process(
-                $recordContentObjectRenderer,
+                $recordCObj,
                 $processorConfiguration,
                 $processedRecordVariables[$record['uid']]
             );
         }
 
-        //MO: Make default sorting according to manual sorting
-        if(
-            isset($cObj->data['tx_addresses_orderby'])
-            && $cObj->data['CType'] === "addresses_selected"
-            && isset($cObj->data['tx_addresses'])
-            && $cObj->data['tx_addresses']
-        )
-        {
-            $defaultSorting = array_flip(GeneralUtility::intExplode(",", $cObj->data['tx_addresses']));
-            $processedRecordVariablesSortedCleaned = array_filter(array_replace($defaultSorting, $processedRecordVariables), function($item) {
-                return !is_int($item);
-            });
-            if(count($processedRecordVariablesSortedCleaned)){
-                $processedRecordVariables = $processedRecordVariablesSortedCleaned;
-                unset($processedRecordVariablesSortedCleaned);
-            }
+        // Manual sorting
+        $manualSorting = array_flip(GeneralUtility::intExplode(",", $cObj->data['tx_addresses']));
+        $processedRecordVariablesSortedCleaned = array_filter(
+            array_replace($manualSorting, $processedRecordVariables),
+            fn($item) => !is_int($item)
+        );
+
+        if (count($processedRecordVariablesSortedCleaned)) {
+            $processedRecordVariables = $processedRecordVariablesSortedCleaned;
         }
 
         $processedData[$targetVariableName] = $processedRecordVariables;
+
+        // Parent processing
         $allProcessedData = parent::process($cObj, $contentObjectConfiguration, $processorConfiguration, $processedData);
 
-        $paginationSettings = $processorConfiguration['pagination.'];
-        if ((int)($cObj->stdWrapValue('isActive', $paginationSettings ?? []))) {
-          $paginatedData = new DataToPaginatedData();
-          $allProcessedData = $paginatedData->getPaginatedData(
-              $cObj,
-              $contentObjectConfiguration,
-              $processorConfiguration,
-              $allProcessedData,
-              $allProcessedData[$processorConfiguration['as']],
-              $processorConfiguration['as']
-          );
-          return $allProcessedData;
-        } else {
-          return $allProcessedData;
+        // Pagination
+        $paginationSettings = $processorConfiguration['pagination.'] ?? [];
+        if ((int)($cObj->stdWrapValue('isActive', $paginationSettings))) {
+            $paginatedData = new DataToPaginatedData();
+            $allProcessedData = $paginatedData->getPaginatedData(
+                $cObj,
+                $contentObjectConfiguration,
+                $processorConfiguration,
+                $allProcessedData,
+                $allProcessedData[$processorConfiguration['as']],
+                $processorConfiguration['as']
+            );
         }
+
+        return $allProcessedData;
     }
 }

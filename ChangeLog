@@ -20,3 +20,24 @@
     [FEATURE] add timezone field to address records
 * 1.1.1
     [BUGFIX] remove 'type' => '0'
+
+* 2.0.0
+    e7cf733 [TASK] modernise image filetype handling
+            M - Configuration/TCA/tx_addresses_domain_model_address.php
+    ac4b784 [TASK] remove relic ImageViewHelper
+            D - Classes/ViewHelpers/ImageViewHelper.php
+            M - Configuration/Services.yaml
+    0d37625 [TASK] rework back end preview rendering
+            M - Classes/Preview/AddressesPreviewRenderer.php
+    d5ff3b2 [TASK] modernise icon handling
+            A - Configuration/Icons.php
+            M - ext_localconf.php
+    a5d04a8 [TASK] add site sets
+            A - Configuration/Sets/Configuration/config.yaml
+            A - Configuration/Sets/Configuration/constants.typoscript
+            A - Configuration/Sets/Configuration/setup.typoscript
+    aee6278 [TASK] upgrade to v14 compatibility
+            M - composer.json
+            M - ext_emconf.php
+    45664c3 [TASK] add TsConfig check by content types
+            M - Classes/Preview/AddressesPreviewRenderer.php
