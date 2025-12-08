@@ -20,7 +20,6 @@
     [FEATURE] add timezone field to address records
 * 1.1.1
     [BUGFIX] remove 'type' => '0'
-
 * 2.0.0
     e7cf733 [TASK] modernise image filetype handling
             M - Configuration/TCA/tx_addresses_domain_model_address.php
@@ -41,3 +40,9 @@
             M - ext_emconf.php
     45664c3 [TASK] add TsConfig check by content types
             M - Classes/Preview/AddressesPreviewRenderer.php
+    daf3ba4 [TASK] remove deprecations and clean up
+            M - Classes/DataProcessing/AddressesDatabaseQueryProcessor.php
+            D - Classes/Hooks/ContentPostProcessor.php
+            D - Configuration/TSConfig/wizard.tsconfig
+            D - Resources/Private/Templates/Vcard.html
+            M - ext_localconf.php
