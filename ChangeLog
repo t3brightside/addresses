@@ -46,3 +46,15 @@
             D - Configuration/TSConfig/wizard.tsconfig
             D - Resources/Private/Templates/Vcard.html
             M - ext_localconf.php
+* 2.1.0
+    4780635 [TASK] code clean up
+        M - Classes/Preview/AddressesPreviewRenderer.php
+    420fdd2 [TASK] add example template files
+        A - Resources/Private/Partials/Card.html
+        A - Resources/Private/Partials/List.html
+        A - Resources/Private/Partials/Table.html
+        M - Resources/Private/Templates/Addresses.html
+    be13554 [TASK] code clean up
+        D - Resources/Private/Templates/Backend/Preview.html
+    a5976bb [BUGFIX] bring back wizards.newContentElement for v12
+        M - Configuration/page.tsconfig
