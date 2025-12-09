@@ -202,7 +202,7 @@ class AddressesPreviewRenderer extends StandardContentPreviewRenderer implements
         $anchorId = $getValue('tx_paginatedprocessors_anchorid');
         $urlSegment = $getValue('tx_paginatedprocessors_urlsegment');
 
-        // --- Data Fetching & Query Execution Setup (unchanged) ---
+        // --- Data Fetching & Query Execution Setup ---
         $pageTitles = $this->getPageTitles($pids);
         $categoryRecords = $this->getCategories($selectedCategories);
         $categoryTitles = array_column($categoryRecords, 'title');
@@ -216,23 +216,16 @@ class AddressesPreviewRenderer extends StandardContentPreviewRenderer implements
         $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)
             ->getQueryBuilderForTable(self::ADDRESSES_TABLE);
 
-        // --- Query Construction and Execution (unchanged) ---
+        // --- Query Construction and Execution ---
         if ($CType === 'addresses_selected' && !empty($selectedRecordUids)) {
             $query = $queryBuilder
                 ->select('uid', 'name', 'address')
                 ->from(self::ADDRESSES_TABLE)
                 ->where($queryBuilder->expr()->in('uid', $selectedRecordUids));
-        } elseif ($CType === 'addresses_frompages' && !empty($pidUids)) {
-            // ... query logic ...
         }
 
         if ($query instanceof QueryBuilder) {
             $addressesRecords = $query->executeQuery()->fetchAllAssociative();
-        }
-
-        // Reorder array for 'addresses_selected' (unchanged)
-        if ($CType === 'addresses_selected' && !empty($selectedRecordUids)) {
-            // ... reordering logic ...
         }
 
         // --- HTML Output Generation ---
@@ -274,59 +267,49 @@ class AddressesPreviewRenderer extends StandardContentPreviewRenderer implements
             $output .= $createDetailLine('Selected Addresses:', $value);
         }
 
-        // PAGES FIELD CHECK
         if ($isFieldAvailable('pages') && !empty($pageTitles)) {
             $value = '<span>' . implode(', ', $pageTitles) . '</span>';
             $content = '<strong style="' . $labelStyle . '">Addresses from:</strong>' . $value;
             $output .= '<div>' . $this->linkEditContent($content, $record) . '</div>';
         }
 
-        // SELECTED_CATEGORIES FIELD CHECK
         if ($isFieldAvailable('selected_categories') && !empty($categoryTitles)) {
             $value = implode(', ', $categoryTitles);
             $output .= $createDetailLine('Category filter (ANY):', $value);
         }
 
-        // ORDER BY FIELD CHECK
         if ($isFieldAvailable('tx_addresses_orderby') && $orderBy) {
             $output .= $createDetailLine('Order by:', $orderBy);
         }
 
-        // START FROM FIELD CHECK
         if ($isFieldAvailable('tx_addresses_startfrom') && $firstResult) {
             $output .= $createDetailLine('Start from record:', $firstResult);
         }
 
-        // LIMIT FIELD CHECK
         if ($isFieldAvailable('tx_addresses_limit') && $maxResults) {
             $output .= $createDetailLine('Limit to:', $maxResults);
         }
 
-        // TEMPLATE FIELD CHECK
         if ($isFieldAvailable('tx_addresses_template') && $template) {
             $output .= $createDetailLine('Layout Template:', $template);
         }
 
-        // TITLE WRAP FIELD CHECK
         if ($isFieldAvailable('tx_addresses_titlewrap') && $titleWrap) {
             $output .= $createDetailLine('Title Wrap:', $titleWrap);
         }
 
-        // IMAGES FIELD CHECK
         if ($isFieldAvailable('tx_addresses_images')) {
             if ($disableImages) {
                 $output .= $createDetailLine('Images:', 'disabled');
             } else {
                 $output .= $createDetailLine('Images:', 'enabled');
                 
-                // CROP RATIO FIELD CHECK (Only relevant if Images are available)
                 if ($isFieldAvailable('tx_addresses_cropratio') && $cropRatio) {
                     $output .= $createDetailLine('Image crop:', $cropRatio);
                 }
             }
         }
 
-        // INFORMATION FIELD CHECK
         if ($isFieldAvailable('tx_addresses_information')) {
             if (!$disableInformation) {
                 $output .= $createDetailLine('Information:', 'enabled');
@@ -335,7 +318,6 @@ class AddressesPreviewRenderer extends StandardContentPreviewRenderer implements
             }
         }
 
-        // PERSONNEL FIELD CHECK
         if ($isFieldAvailable('tx_addresses_personnel')) {
             if ($showPersonnel) {
                 $output .= $createDetailLine('Show personnel:', 'enabled');
@@ -352,25 +334,20 @@ class AddressesPreviewRenderer extends StandardContentPreviewRenderer implements
             
             $paginationContent = '<br /><strong>Pagination:</strong> active';
 
-            // ITEM PER PAGE CHECK
             if ($isFieldAvailable('tx_paginatedprocessors_itemsperpage') && $itemsPerPage) {
                 $paginationContent .= ' •&nbsp;items per page: ' . htmlspecialchars($itemsPerPage);
             }
-            // PAGE LINKS SHOWN CHECK
             if ($isFieldAvailable('tx_paginatedprocessors_pagelinksshown') && $pageLinksShown) {
                 $paginationContent .= ' •&nbsp;page links shown: ' . htmlspecialchars($pageLinksShown);
             }
             
-            // ANCHOR ID CHECK
             if ($isFieldAvailable('tx_paginatedprocessors_anchorid') && is_numeric($anchorId) && (int)$anchorId > 0) {
                 $paginationContent .= ' •&nbsp;focus on page change: ' . htmlspecialchars($anchorId);
             } else {
-                // ANCHOR CHECK (Simple checkbox option)
                 if ($isFieldAvailable('tx_paginatedprocessors_anchor') && $anchor) {
                     $paginationContent .= ' •&nbsp;focus self on page change';
                 }
             }
-            // URL SEGMENT CHECK
             if ($isFieldAvailable('tx_paginatedprocessors_urlsegment') && $urlSegment) {
                 $paginationContent .= ' •&nbsp;anchor: ' . htmlspecialchars($urlSegment);
             }
@@ -379,7 +356,6 @@ class AddressesPreviewRenderer extends StandardContentPreviewRenderer implements
         }
 
         $output .= '</div>';
-
         return $output;
     }
 }
