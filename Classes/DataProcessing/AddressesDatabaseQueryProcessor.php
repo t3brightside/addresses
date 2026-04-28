@@ -3,11 +3,21 @@ namespace Brightside\Addresses\DataProcessing;
 
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
+use TYPO3\CMS\Frontend\ContentObject\ContentDataProcessor;
+use TYPO3\CMS\Frontend\ContentObject\DataProcessorInterface;
 use TYPO3\CMS\Frontend\DataProcessing\DatabaseQueryProcessor;
 use Brightside\Paginatedprocessors\Processing\DataToPaginatedData;
 
-class AddressesDatabaseQueryProcessor extends DatabaseQueryProcessor
+class AddressesDatabaseQueryProcessor implements DataProcessorInterface
 {
+    // Hold the ContentDataProcessor locally since we no longer inherit it
+    private ContentDataProcessor $contentDataProcessor;
+
+    public function __construct(ContentDataProcessor $contentDataProcessor = null)
+    {
+        $this->contentDataProcessor = $contentDataProcessor ?? GeneralUtility::makeInstance(ContentDataProcessor::class);
+    }
+
     /**
      * Fetches records from the database as an array
      *
@@ -49,6 +59,8 @@ class AddressesDatabaseQueryProcessor extends DatabaseQueryProcessor
             $recordCObj->start($record, $tableName);
 
             $processedRecordVariables[$record['uid']] = ['data' => $record];
+            
+            // Uses our local property now
             $processedRecordVariables[$record['uid']] = $this->contentDataProcessor->process(
                 $recordCObj,
                 $processorConfiguration,
@@ -69,8 +81,20 @@ class AddressesDatabaseQueryProcessor extends DatabaseQueryProcessor
 
         $processedData[$targetVariableName] = $processedRecordVariables;
 
-        // Parent processing
-        $allProcessedData = parent::process($cObj, $contentObjectConfiguration, $processorConfiguration, $processedData);
+        // --- THE MAGIC HAPPENS HERE ---
+        
+        // Instantiate the core DatabaseQueryProcessor manually
+        $databaseProcessor = GeneralUtility::makeInstance(DatabaseQueryProcessor::class);
+
+        // Call the core process method instead of parent::process
+        $allProcessedData = $databaseProcessor->process(
+            $cObj, 
+            $contentObjectConfiguration, 
+            $processorConfiguration, 
+            $processedData
+        );
+
+        // ------------------------------
 
         // Pagination
         $paginationSettings = $processorConfiguration['pagination.'] ?? [];
