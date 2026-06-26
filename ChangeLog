@@ -1,60 +1,63 @@
-* 1.0.0
-    [TASK] initial release
-* 1.0.1
-    [TASK] remove news author TS conf
-* 1.0.2
-    [TASK] add icon colouring
-    [TASK] add Default layout and Main section
-    [TASK] remove default template set to cards
-* 1.0.3
-    [BUGFIX] Addresses TCA seach config contains not existing fields
-    [TASK] Improved description
-    [TASK] set item image width dynamic
-* 1.0.4
-    [FEATURE] Improve bidirectional editing between pages and addresses
-    [TASK] clean up, remove vCard related configuration
-* 1.0.5
-    [BUGFIX] wront table name instead of tx_addresses
-* 1.1.0
-    [BUGFIX] rename name sorting field
-    [FEATURE] add timezone field to address records
-* 1.1.1
-    [BUGFIX] remove 'type' => '0'
-* 2.0.0
-    e7cf733 [TASK] modernise image filetype handling
-            M - Configuration/TCA/tx_addresses_domain_model_address.php
-    ac4b784 [TASK] remove relic ImageViewHelper
-            D - Classes/ViewHelpers/ImageViewHelper.php
-            M - Configuration/Services.yaml
-    0d37625 [TASK] rework back end preview rendering
-            M - Classes/Preview/AddressesPreviewRenderer.php
-    d5ff3b2 [TASK] modernise icon handling
-            A - Configuration/Icons.php
-            M - ext_localconf.php
-    a5d04a8 [TASK] add site sets
-            A - Configuration/Sets/Configuration/config.yaml
-            A - Configuration/Sets/Configuration/constants.typoscript
-            A - Configuration/Sets/Configuration/setup.typoscript
-    aee6278 [TASK] upgrade to v14 compatibility
-            M - composer.json
-            M - ext_emconf.php
-    45664c3 [TASK] add TsConfig check by content types
-            M - Classes/Preview/AddressesPreviewRenderer.php
-    daf3ba4 [TASK] remove deprecations and clean up
-            M - Classes/DataProcessing/AddressesDatabaseQueryProcessor.php
-            D - Classes/Hooks/ContentPostProcessor.php
-            D - Configuration/TSConfig/wizard.tsconfig
-            D - Resources/Private/Templates/Vcard.html
-            M - ext_localconf.php
-* 2.1.0
-    4780635 [TASK] code clean up
-        M - Classes/Preview/AddressesPreviewRenderer.php
-    420fdd2 [TASK] add example template files
-        A - Resources/Private/Partials/Card.html
-        A - Resources/Private/Partials/List.html
-        A - Resources/Private/Partials/Table.html
-        M - Resources/Private/Templates/Addresses.html
-    be13554 [TASK] code clean up
-        D - Resources/Private/Templates/Backend/Preview.html
-    a5976bb [BUGFIX] bring back wizards.newContentElement for v12
-        M - Configuration/page.tsconfig
+- 1.0.0
+  [TASK] initial release
+- 1.0.1
+  [TASK] remove news author TS conf
+- 1.0.2
+  [TASK] add icon colouring
+  [TASK] add Default layout and Main section
+  [TASK] remove default template set to cards
+- 1.0.3
+  [BUGFIX] Addresses TCA seach config contains not existing fields
+  [TASK] Improved description
+  [TASK] set item image width dynamic
+- 1.0.4
+  [FEATURE] Improve bidirectional editing between pages and addresses
+  [TASK] clean up, remove vCard related configuration
+- 1.0.5
+  [BUGFIX] wront table name instead of tx_addresses
+- 1.1.0
+  [BUGFIX] rename name sorting field
+  [FEATURE] add timezone field to address records
+- 1.1.1
+  [BUGFIX] remove 'type' => '0'
+- 2.0.0
+  e7cf733 [TASK] modernise image filetype handling
+  M - Configuration/TCA/tx_addresses_domain_model_address.php
+  ac4b784 [TASK] remove relic ImageViewHelper
+  D - Classes/ViewHelpers/ImageViewHelper.php
+  M - Configuration/Services.yaml
+  0d37625 [TASK] rework back end preview rendering
+  M - Classes/Preview/AddressesPreviewRenderer.php
+  d5ff3b2 [TASK] modernise icon handling
+  A - Configuration/Icons.php
+  M - ext_localconf.php
+  a5d04a8 [TASK] add site sets
+  A - Configuration/Sets/Configuration/config.yaml
+  A - Configuration/Sets/Configuration/constants.typoscript
+  A - Configuration/Sets/Configuration/setup.typoscript
+  aee6278 [TASK] upgrade to v14 compatibility
+  M - composer.json
+  M - ext_emconf.php
+  45664c3 [TASK] add TsConfig check by content types
+  M - Classes/Preview/AddressesPreviewRenderer.php
+  daf3ba4 [TASK] remove deprecations and clean up
+  M - Classes/DataProcessing/AddressesDatabaseQueryProcessor.php
+  D - Classes/Hooks/ContentPostProcessor.php
+  D - Configuration/TSConfig/wizard.tsconfig
+  D - Resources/Private/Templates/Vcard.html
+  M - ext_localconf.php
+- 2.1.0
+  4780635 [TASK] code clean up
+  M - Classes/Preview/AddressesPreviewRenderer.php
+  420fdd2 [TASK] add example template files
+  A - Resources/Private/Partials/Card.html
+  A - Resources/Private/Partials/List.html
+  A - Resources/Private/Partials/Table.html
+  M - Resources/Private/Templates/Addresses.html
+  be13554 [TASK] code clean up
+  D - Resources/Private/Templates/Backend/Preview.html
+  a5976bb [BUGFIX] bring back wizards.newContentElement for v12
+  M - Configuration/page.tsconfig
+- 2.1.1
+  b1a114a [TASK] implements DataProcessorInterface
+  M - Classes/DataProcessing/AddressesDatabaseQueryProcessor.php
